@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('id_produk');
             $table->string('nama');
             $table->integer('harga');
-            $table->integer('diskon')->nullable();
+            $table->integer('stock')->nullable();
             $table->string('gambar')->nullable();
             $table->timestamps();
         });

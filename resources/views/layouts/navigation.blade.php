@@ -17,13 +17,14 @@
                     </x-nav-link>
                 </div>
 
-                @if(auth()->user()->role == 'admin')
+                @if(auth()->check() && auth()->user()->role == 'admin')
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('admin.products.index')" :active="request()->routeIs('admin.products.*')">
+                    <x-nav-link :href="route('admin.produk')" :active="request()->routeIs('admin.produk')">
                         {{ __('Produk') }}
                     </x-nav-link>
                 </div>
                 @endif
+
             </div>
 
 
@@ -82,11 +83,11 @@
             </x-responsive-nav-link>
         </div>
 
-        @if(auth()->user()->role == 'admin')
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('admin.products.index')" :active="request()->routeIs('admin.products.*')">
+        @if(auth()->check() && auth()->user()->role == 'admin')
+        <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+            <x-nav-link :href="route('admin.produk')" :active="request()->routeIs('admin.produk')">
                 {{ __('Produk') }}
-            </x-responsive-nav-link>
+            </x-nav-link>
         </div>
         @endif
 

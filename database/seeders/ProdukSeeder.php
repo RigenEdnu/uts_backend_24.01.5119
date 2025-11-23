@@ -36,11 +36,12 @@ class ProdukSeeder extends Seeder
 
         for ($i = 1; $i <= 100; $i++) {
 
-            $nama_produk = ucwords($faker->word()) . ' ' . fake()->randomElement($produkTypes);
+            $nama_produk = ucwords($faker->word()) . ' ' . $faker->randomElement($produkTypes);
 
             DB::table('produk')->insert([
                 'nama'       => $nama_produk,
                 'harga'      => $faker->randomElement($hargaRanges[array_rand($hargaRanges)]),
+                'stock'      => $faker->numberBetween(1, 100),
                 'gambar'     => $faker->randomElement($foto_produk),
                 'created_at' => now(),
                 'updated_at' => now(),

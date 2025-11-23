@@ -12,9 +12,12 @@ class Produk extends Model
 
     protected $table = 'produk';
     protected $primaryKey = 'id_produk';
+    public $timestamps = true;
+
     protected $fillable = [
         'nama',
         'harga',
         'gambar',
+        'stock',
     ];
 }

@@ -2,39 +2,80 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Produk;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ProdukController extends Controller
 {
-    public function index()
+    // untuk tampilan admin (read)
+    public function indexAdmin()
     {
-        $produk = Produk::take(4)->get();
-        return view('front.home', compact('produk'));
+        $produk = Produk::orderBy('id_produk', 'desc')->get();
+        return view('produk.index', compact('produk')); // view existing: resources/views/produk/index.blade.php
     }
 
-    public function cari_produk(request $request)
+    public function create()
     {
-        $nama      = $request->input('nama');
-        $harga_min = $request->input('min');
-        $harga_max = $request->input('max');
-
-        $query = Produk::query();
-
-        if (!empty($nama)) {
-            $query->where('nama', 'like', '%' . $nama . '%');
-        }
-
-        if (!empty($harga_min)) {
-            $query->where('harga', '>=', $harga_min);
-        }
-
-        if (!empty($harga_max)) {
-            $query->where('harga', '<=', $harga_max);
-        }
-
-        $produk = $query->get();
-
-        return view('front.produk', compact('produk', 'nama', 'harga_min', 'harga_max'));
+        return view('produk.create_produk'); // resources/views/produk/create_produk.blade.php
     }
+
+    public function store(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'nama' => 'required|min:3|max:100',
+            'harga' => 'required|numeric|min:0',
+            'stock' => 'required|integer|min:0',
+            // tambahkan field lain jika ada (gambar, stock)
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        Produk::create([
+            'nama' => $request->nama,
+            'harga' => $request->harga,
+            'stock' => $request->stock,
+            // 'gambar' => ... jika handle upload
+        ]);
+
+        return redirect()->route('admin.produk')->with('success', 'Produk berhasil ditambahkan!');
+    }
+
+    public function edit($id)
+    {
+        $produk = Produk::findOrFail($id);
+        return view('produk.edit_produk', compact('produk'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'nama' => 'required|min:3|max:100',
+            'harga' => 'required|numeric|min:0',
+            'stock' => 'required|integer|min:0',
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+        $produk = Produk::findOrFail($id);
+        $produk->update([
+            'nama' => $request->nama,
+            'harga' => $request->harga,
+            'stock' => $request->stock,
+        ]);
+        return redirect()->route('admin.produk')->with('success', 'Produk berhasil diperbarui!');
+    }
+
+    public function destroy($id)
+    {
+        $produk = Produk::findOrFail($id);
+        $produk->delete();
+        return redirect()->route('admin.produk')->with('success', 'Produk berhasil dihapus.');
+    }
+
+    // tetap sisakan fungsi publik untuk front (home / produk publik) sesuai Modul 6
 }

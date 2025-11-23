@@ -34,8 +34,13 @@ Route::get('/user', function () {
     return view('dashboard.user');
 })->middleware('role:user');
 
-Route::prefix('admin')->name('admin.')->middleware('role:admin')->group(function () {
-    Route::resource('products', ProdukController::class)->except(['show']);
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin/produk', [ProdukController::class, 'indexAdmin'])->name('admin.produk');
+    Route::get('/admin/produk/create', [ProdukController::class, 'create'])->name('admin.produk.create');
+    Route::post('/admin/produk/store', [ProdukController::class, 'store'])->name('admin.produk.store');
+    Route::get('/admin/produk/edit/{id}', [ProdukController::class, 'edit'])->name('admin.produk.edit');
+    Route::put('/admin/produk/update/{id}', [ProdukController::class, 'update'])->name('admin.produk.update');
+    Route::delete('/admin/produk/delete/{id}', [ProdukController::class, 'destroy'])->name('admin.produk.delete');
 });
 
 require __DIR__.'/auth.php';
