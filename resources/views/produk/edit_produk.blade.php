@@ -7,11 +7,19 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                {{-- tampilkan flash 'error' --}}
+                @if(session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+                @endif
+
+                {{-- tampilkan validation errors (list) --}}
                 @if($errors->any())
                 <div class="alert alert-danger">
-                    <ul>
-                        @foreach($errors->all() as $e)
-                        <li>{{ $e }}</li>
+                    <ul class="mb-0">
+                        @foreach($errors->all() as $err)
+                        <li>{{ $err }}</li>
                         @endforeach
                     </ul>
                 </div>
@@ -21,6 +29,7 @@
                     <div class="mb-3">
                         <label>Nama Produk</label>
                         <input type="text" name="nama" class="form-control" value="{{ old('nama', $produk->nama) }}">
+                        @error('nama') <small class="text-danger">{{ $message }}</small> @enderror
                     </div>
                     <div class="mb-3">
                         <label>Harga</label>

@@ -30,6 +30,7 @@ class ProdukController extends Controller
         ]);
 
         if ($validator->fails()) {
+            session()->flash('error', 'Validasi gagal - periksa input Anda.');
             return redirect()->back()
                 ->withErrors($validator)
                 ->withInput();
