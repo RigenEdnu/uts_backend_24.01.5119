@@ -27,7 +27,7 @@ class HomeController extends Controller
         //     ['nama' => 'Produk 2', 'harga' => 4800000, 'gambar' => 'produk2.jpg', 'diskon' => 5],
         //     ['nama' => 'Produk 3', 'harga' => 5200000, 'gambar' => 'produk3.jpg', 'diskon' => 0],
         // ];
-        $produk = Produk::take(4)->get();
+        $produk = Produk::take(8)->get();
         return view('front.home', compact('produk'));
     }
 }

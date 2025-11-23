@@ -43,4 +43,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::delete('/admin/produk/delete/{id}', [ProdukController::class, 'destroy'])->name('admin.produk.delete');
 });
 
+Route::get('/debug-img-list', function () {
+    $files = array_map('basename', glob(public_path('img/*')));
+    return response()->json($files);
+});
+
 require __DIR__.'/auth.php';
