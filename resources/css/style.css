@@ -23,3 +23,7 @@ font-size: 0.95rem;
 width: 100%; 
 border-radius: 15px; 
 } 
+.required:after {
+    content: " *";
+    color: red;
+}

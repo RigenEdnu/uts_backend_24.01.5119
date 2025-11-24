@@ -13,30 +13,22 @@
                 </div>
                 @endif
 
-                {{-- tampilkan validation errors (list) --}}
-                @if($errors->any())
-                <div class="alert alert-danger">
-                    <ul class="mb-0">
-                        @foreach($errors->all() as $err)
-                        <li>{{ $err }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-                @endif
                 <form action="{{ route('admin.produk.store') }}" method="POST">
                     @csrf
                     <div class="mb-3">
-                        <label>Nama Produk</label>
+                        <label>Nama Produk <span style="color:red">*</span></label>
                         <input type="text" name="nama" class="form-control" value="{{ old('nama') }}">
                         @error('nama') <small class="text-danger">{{ $message }}</small> @enderror
                     </div>
                     <div class="mb-3">
-                        <label>Harga</label>
+                        <label>Harga <span style="color:red">*</span></label>
                         <input type="number" name="harga" class="form-control" value="{{ old('harga') }}">
+                        @error('harga') <small class="text-danger">{{ $message }}</small> @enderror
                     </div>
                     <div class="mb-3">
-                        <label>Stock</label>
+                        <label>Stock <span style="color:red">*</span></label>
                         <input type="number" name="stock" class="form-control" value="{{ old('stock') }}">
+                        @error('stock') <small class="text-danger">{{ $message }}</small> @enderror
                     </div>
                     <button class="btn btn-success">Simpan</button>
                     <a href="{{ route('admin.produk') }}" class="btn btn-secondary">Kembali</a>
