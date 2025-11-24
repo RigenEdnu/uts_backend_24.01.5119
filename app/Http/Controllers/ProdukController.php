@@ -8,16 +8,15 @@ use Illuminate\Support\Facades\Validator;
 
 class ProdukController extends Controller
 {
-    // untuk tampilan admin (read)
     public function indexAdmin()
     {
         $produk = Produk::orderBy('id_produk', 'desc')->get();
-        return view('produk.index', compact('produk')); // view existing: resources/views/produk/index.blade.php
+        return view('produk.index', compact('produk'));
     }
 
     public function create()
     {
-        return view('produk.create_produk'); // resources/views/produk/create_produk.blade.php
+        return view('produk.create_produk'); 
     }
 
     public function store(Request $request)
@@ -26,7 +25,7 @@ class ProdukController extends Controller
             'nama' => 'required|min:3|max:100',
             'harga' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
-            // tambahkan field lain jika ada (gambar, stock)
+            
         ]);
 
         if ($validator->fails()) {
@@ -40,7 +39,7 @@ class ProdukController extends Controller
             'nama' => $request->nama,
             'harga' => $request->harga,
             'stock' => $request->stock,
-            // 'gambar' => ... jika handle upload
+            
         ]);
 
         return redirect()->route('admin.produk')->with('success', 'Produk berhasil ditambahkan!');
@@ -77,6 +76,4 @@ class ProdukController extends Controller
         $produk->delete();
         return redirect()->route('admin.produk')->with('success', 'Produk berhasil dihapus.');
     }
-
-    // tetap sisakan fungsi publik untuk front (home / produk publik) sesuai Modul 6
 }
