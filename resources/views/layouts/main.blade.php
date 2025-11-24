@@ -16,7 +16,6 @@
             <a class="navbar-brand" href="{{ url ('') }}">Rigen's Shop</a>
             <div class="navbar-nav">
                 <a class="nav-link" href="{{ url ('/home') }}">Home</a>
-                <a class="nav-link" href="{{ url ('/produk') }}">Produk</a>
             </div>
         </div>
     </nav>

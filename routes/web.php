@@ -10,11 +10,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/', [HomeController::class, 'home']);
+// Route::get('/', [HomeController::class, 'home']);
 Route::get('/home', [HomeController::class, 'home']);
 Route::get('/produk', [ProdukController::class, 'cari_produk']);
 Route::get('/produk/detail/{nama}', [ProdukController::class, 'detail']);
